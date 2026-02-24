@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'position',
     'employee',
+    'transcript',
 ]
 
 MIDDLEWARE = [
@@ -130,3 +131,6 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 # Authentication
 LOGOUT_REDIRECT_URL = '/'
 LOGIN_REDIRECT_URL = '/'
+
+# Whisperx API
+WHISPERX_API_URL='http://whisperx-asr:9000/'

@@ -1,0 +1,32 @@
+version: '3.8'
+
+services:
+  backend:
+    container_name: backend
+    build:
+      context: /src/project/
+      dockerfile: Dockerfile
+    command: python manage.py runserver 0.0.0.0:8000
+    volumes:
+      - ./src/project:/app  
+    working_dir: /app
+    ports:
+      - "8000:8000"
+
+  whisperx-asr:
+    image: learnedmachine/whisperx-asr-service:latest
+    container_name: whisperx-asr
+    ports:
+      - "9000:9000"
+    environment:
+      - DEVICE=cpu
+      - COMPUTE_TYPE=int8
+      - BATCH_SIZE=4
+      - PRELOAD_MODEL=small
+      - HF_TOKEN=${HF_TOKEN} # Still required for diarization
+    volumes:
+      - whisperx-cache:/.cache
+    restart: unless-stopped
+
+volumes:
+  whisperx-cache:
