@@ -134,3 +134,7 @@ LOGIN_REDIRECT_URL = '/'
 
 # Whisperx API
 WHISPERX_API_URL='http://whisperx-asr:9000/'
+
+# Ollama
+OLLAMA_URL='http://ollama:11434/'
+OLLAMA_MODEL='gemma3:1b'

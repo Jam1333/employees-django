@@ -1,0 +1,15 @@
+{% extends "form.html" %}
+
+{% block title %}
+Prompt ollama model
+{% endblock %}
+
+{% block submit %}
+Prompt
+{% endblock %}
+
+{% block response %}
+{% if response %}
+    <p class="text-center mt-10 p-4 max-w-xl">{{ response }}</p>
+{% endif %}
+{% endblock %}

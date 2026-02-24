@@ -17,6 +17,7 @@
         <nav class="flex flex-col md:flex-row gap-2 md:gap-8 justify-center items-center">
           <a href="{% url 'home' %}" class="text-gray-700 hover:text-indigo-600 transition-colors duration-200 font-medium">Home</a>
             {% if user.is_authenticated %}
+              <a href="{% url 'prompt' %}" class="text-gray-700 hover:text-indigo-600 transition-colors duration-200 font-medium">Prompt</a>
               <a href="{% url 'create-transcript' %}" class="text-gray-700 hover:text-indigo-600 transition-colors duration-200 font-medium">Transcripts</a>
               <a href="{% url 'positions' %}" class="text-gray-700 hover:text-indigo-600 transition-colors duration-200 font-medium">Positions</a>
               <a href="{% url 'employees' %}" class="text-gray-700 hover:text-indigo-600 transition-colors duration-200 font-medium">Employees</a>

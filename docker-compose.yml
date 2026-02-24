@@ -28,5 +28,19 @@ services:
       - whisperx-cache:/.cache
     restart: unless-stopped
 
+  ollama:
+    image: ollama/ollama:latest
+    ports:
+      - "11434:11434"
+    volumes:
+      - ollama_models:/root/.ollama
+      - ./entrypoint.sh:/entrypoint.sh # Mount the custom script
+    container_name: ollama
+    pull_policy: always
+    tty: true
+    restart: always
+    entrypoint: ["/usr/bin/bash", "/entrypoint.sh"]
+
 volumes:
   whisperx-cache:
+  ollama_models:
