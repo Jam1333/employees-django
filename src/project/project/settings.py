@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'position',
     'employee',
     'transcript',
+    'document',
 ]
 
 MIDDLEWARE = [
