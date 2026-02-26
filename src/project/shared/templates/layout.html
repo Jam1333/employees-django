@@ -21,6 +21,7 @@
               <a href="{% url 'create-transcript' %}" class="text-gray-700 hover:text-indigo-600 transition-colors duration-200 font-medium">Transcripts</a>
               <a href="{% url 'positions' %}" class="text-gray-700 hover:text-indigo-600 transition-colors duration-200 font-medium">Positions</a>
               <a href="{% url 'employees' %}" class="text-gray-700 hover:text-indigo-600 transition-colors duration-200 font-medium">Employees</a>
+              <a href="{% url 'documents' %}" class="text-gray-700 hover:text-indigo-600 transition-colors duration-200 font-medium">Documents</a>
               <form method="post" action="{% url 'logout' %}" class="inline">
                 {% csrf_token %}
                 <button type="submit" class="text-gray-700 hover:text-indigo-600 transition-colors duration-200 font-medium">Logout</button>

@@ -1,6 +1,13 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
+from .models import Document
 from .forms import DocumentForm
 from services.ollama_service import OllamaService
+from services.file_service import FileService
+
+def documents(request):
+    documents = Document.objects.prefetch_related("employees").all()
+    
+    return render(request, "documents.html", {"documents": documents})
 
 def create_document(request):
     if request.method == "POST":
@@ -9,22 +16,34 @@ def create_document(request):
         form = DocumentForm(request.POST, request.FILES)
         
         if form.is_valid():
-            service = OllamaService()
+            file_service = FileService()
+            ollama_service = OllamaService()
             
-            file_content = form.cleaned_data["file"].read().decode("utf-8")
-            summary = service.get_response(f"""
-                Please provide 4-5 sentences summary of the document
-                Document content: '{file_content}'
-                **Return only summary, nothing else**
+            file = form.cleaned_data["file"]
+            file_content = file_service.read_docx(file)
+            
+            summary = ollama_service.get_response(f"""
+                Пожалуйста, предоставьте краткое изложение документа в 4-5 предложениях.
+                Содержание документа: '{file_content}'
+                **Верните только краткое изложение, ничего больше**
                 """)
             
             document = form.save(commit=False)
             document.summary = summary
             
             document.save()
+            form.save_m2m()
             
-            return render(request, "create-document-form.html", {"form": form})
+            return redirect("documents")
     else:
         form = DocumentForm()
     
     return render(request, "create-document-form.html", {"form": form})
+
+def delete_document(request, pk):
+    document = get_object_or_404(Document, pk=pk)
+    
+    if request.method == "POST":
+        document.delete()
+    
+    return redirect("documents")

@@ -13,6 +13,31 @@ services:
     ports:
       - "8000:8000"
 
+  postgres:
+    image: postgres:17
+    restart: always
+    environment:
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_USER: postgres
+      POSTGRES_DB: employees
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+
+  pgadmin:
+    image: dpage/pgadmin4:latest
+    restart: unless-stopped
+    environment:
+      PGADMIN_DEFAULT_EMAIL: admin@admin.com
+      PGADMIN_DEFAULT_PASSWORD: password123
+    ports:
+      - "8080:80"
+    volumes:
+      - pgadmin_data:/var/lib/pgadmin
+    depends_on:
+      - postgres
+
   whisperx-asr:
     image: learnedmachine/whisperx-asr-service:latest
     container_name: whisperx-asr
@@ -42,5 +67,7 @@ services:
     entrypoint: ["/usr/bin/bash", "/entrypoint.sh"]
 
 volumes:
+  pgdata:
+  pgadmin_data:
   whisperx-cache:
   ollama_models:

@@ -1,0 +1,57 @@
+{% extends "layout.html" %}
+
+{% block title %}Documents{% endblock %}
+
+{% block content %}
+<div class="w-[40vw] max-w-[768px] min-w-[325px] container mx-auto px-4 py-8">
+    <!-- Header with Create button -->
+    <div class="flex justify-between flex-col md:flex-row gap-2 items-center mb-6">
+        <h1 class="text-3xl font-bold text-gray-800">Documents</h1>
+        <a href="{% url 'create-document' %}" class="bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-4 rounded-lg transition duration-200 ease-in-out transform hover:scale-105">
+            + Create New Document
+        </a>
+    </div>
+
+    <!-- Positions list -->
+    {% if documents %}
+        <ul class="space-y-4">
+            {% for document in documents %}
+                <li class="bg-white rounded-lg shadow-md hover:shadow-lg transition-shadow duration-200 border border-gray-200">
+                    <div class="p-5 flex flex-col sm:flex-row sm:items-center sm:justify-between">
+                        <div class="mb-3 sm:mb-0">
+                            <h2 class="text-xl font-semibold">{{ document.title }}</h2>
+                            <p class="p-2 my-2 mr-4 text-sm text-gray-500 mt-1 text-gray-800 bg-gray-200 rounded-lg">
+                                {{ document.summary }}
+                            </p>
+                            <p class="mr-4 text-sm text-gray-500 mt-1">
+                                {% for employee in document.employees.all %}
+                                    {{ employee }};
+                                {% endfor %}
+                            </p>
+                            <p class="text-sm text-gray-500 mt-1">
+                                Created: {{ document.created_date|date:"F j, Y" }}
+                            </p>
+                        </div>
+                        <form action="{% url 'delete-document' pk=document.pk %}" method="post" class="inline-block">
+                            {% csrf_token %}
+                            <button type="submit" 
+                                    class="bg-red-500 hover:bg-red-600 text-white font-medium py-2 px-4 rounded-lg transition duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-red-300"
+                                    onclick="return confirm('Are you sure you want to delete this document?');">
+                                Delete
+                            </button>
+                        </form>
+                    </div>
+                </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <!-- Empty state -->
+        <div class="text-center py-12 bg-gray-50 rounded-lg border-2 border-dashed border-gray-300">
+            <p class="text-gray-500 text-lg mb-4">No documents found.</p>
+            <a href="{% url 'create-document' %}" class="inline-block bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-6 rounded-lg transition duration-200">
+                Create your first document
+            </a>
+        </div>
+    {% endif %}
+</div>
+{% endblock %}
