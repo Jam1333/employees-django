@@ -1,4 +1,5 @@
 from django import forms
+from django.core.validators import FileExtensionValidator
 
 CHOICE_OPTIONS = [
     ('tiny', 'Tiny'),
@@ -9,4 +10,7 @@ CHOICE_OPTIONS = [
 
 class CreateTranscriptForm(forms.Form):
     model = forms.ChoiceField(choices=CHOICE_OPTIONS)
-    file = forms.FileField(required=True)
+    file = forms.FileField(
+        validators=[FileExtensionValidator(allowed_extensions=['docx'])],
+        required=True
+    )
