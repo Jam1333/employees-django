@@ -4,6 +4,7 @@ CHOICE_OPTIONS = [
     ('tiny', 'Tiny'),
     ('base', 'Base'),
     ('small', 'Small'),
+    ('large-v3', 'Large*'),
 ]
 
 class CreateTranscriptForm(forms.Form):

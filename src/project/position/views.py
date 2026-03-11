@@ -19,6 +19,25 @@ def create_position(request):
     
     return render(request, "position-form.html", {"form": form})
 
+def update_position(request, pk):
+    position = get_object_or_404(Position, pk=pk)
+    
+    if request.method == "POST":
+        form = PositionForm(request.POST)
+        
+        if form.is_valid():
+            position.name = form.cleaned_data["name"]
+            
+            position.save()
+            
+            return redirect("positions")
+    else:
+        form = PositionForm({
+            "name": position.name,
+        })
+    
+    return render(request, "position-update-form.html", {"form": form})
+
 def delete_position(request, pk):
     position = get_object_or_404(Position, pk=pk)
     
