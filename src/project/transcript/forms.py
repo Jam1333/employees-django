@@ -2,8 +2,6 @@ from django import forms
 from django.core.validators import FileExtensionValidator
 
 CHOICE_OPTIONS = [
-    ('tiny', 'Tiny'),
-    ('base', 'Base'),
     ('small', 'Small'),
     ('large-v3', 'Large*'),
 ]
