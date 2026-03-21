@@ -6,6 +6,8 @@ class OllamaService:
         self.client = ollama.Client(host=project.settings.OLLAMA_URL)
         
     def get_response(self, prompt):
+        """Prompts the selected model in docker ollama instance"""
+        
         response = self.client.chat(model=project.settings.OLLAMA_MODEL, messages=[
             {
                 "role": "user",

@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from .models import Document
-from .forms import DocumentForm
+from .forms import DocumentForm, UpdateDocumentForm
 from services.ollama_service import OllamaService
 from services.file_service import FileService
 
@@ -47,3 +47,18 @@ def delete_document(request, pk):
         document.delete()
     
     return redirect("documents")
+
+def update_document(request, pk):
+    document = get_object_or_404(Document, pk=pk)
+    
+    if request.method == "POST":
+        form = UpdateDocumentForm(request.POST, instance=document)
+        
+        if form.is_valid():
+            form.save()
+            
+            return redirect("documents")
+    else:
+        form = UpdateDocumentForm(instance=document)
+
+    return render(request, "update-document-form.html", {"form": form})

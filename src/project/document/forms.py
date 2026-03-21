@@ -11,3 +11,8 @@ class DocumentForm(forms.ModelForm):
     class Meta:
         model = Document
         fields = ["title", "employees"]
+        
+class UpdateDocumentForm(forms.ModelForm):
+    class Meta:
+        model = Document
+        fields = ["title", "employees"]

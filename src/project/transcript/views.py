@@ -13,11 +13,17 @@ def create_transcript(request):
         if form.is_valid():
             service = TranscriptService()
             
-            transcript = service.transcribe_file(
-                form.cleaned_data["file"],
-                form.cleaned_data["model"],
-                "verbose_json",
-            )
+            if form.cleaned_data["use_diarization"] == "True":
+                transcript = service.transcribe_file_with_diarization(
+                    form.cleaned_data["file"],
+                    form.cleaned_data["model"],
+                )
+            else:
+                transcript = service.transcribe_file(
+                    form.cleaned_data["file"],
+                    form.cleaned_data["model"],
+                    "verbose_json",
+                )
             
             formatted_json_transcript = json.dumps(transcript, indent=4, ensure_ascii=False)
             

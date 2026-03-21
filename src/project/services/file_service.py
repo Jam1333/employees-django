@@ -3,6 +3,8 @@ import io
 
 class FileService:
     def read_docx(self, file):
+        """Reads all text from files with '.docx' extension"""
+        
         file_content = io.BytesIO(file.read())
             
         # Open the document using python-docx
